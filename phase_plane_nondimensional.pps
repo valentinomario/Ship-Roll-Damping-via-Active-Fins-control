@@ -1,0 +1,12 @@
+%% PPLANE file %%
+
+H.name = 'phase_plane_nondimensional.pps';
+H.xvar = 'x1';
+H.yvar = 'x2';
+H.xder = 'x2';
+H.yder = 'b*x2 + c*x2*abs(x2) + d*x1 + e*sin(x1)';
+H.pname = {'b','e','c','f','d',''};
+H.pval = {'-0.1232','-0.8727','-0.1015','-0.0044','-0.0648',''};
+H.fieldtype = 'nullclines';
+H.npts = 20;
+H.wind = [-8  8 -8  8];
