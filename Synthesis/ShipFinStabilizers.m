@@ -42,9 +42,9 @@ rate = 90;
 % e = -0.8727
 % f = -0.0044
 
-x0 = [deg2rad(20);0];
+x0 = [deg2rad(10);0];
 tf = 60;
-controller_on = 1;
+on;
 %% LQR
 % (0 0) linearization
 
@@ -62,15 +62,13 @@ D_int = D_lin;
 
 lin_sim = 0;
 Fw = 0;
-%[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([100 5000 200]),1);
-%[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 1000 12]),1);
-%[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 1 1]),1);
+omega_w = 0.3;
+on;
+%[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 250000 50]),1.01);
+[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 250000 50]),1);
 
-[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 250000 50]),1.01);
 
-%[K_LQR, ~, Poles_LQR] = lqr(A_lin,B_lin, diag([100 5000]),1);
 sim('LQR_ship.slx');
-% [K_LQR, ~, Poles_LQR] = lqr(A_lin,B_lin, diag([1 5]), 1e-1);
 
 %% Adaptive control
 
@@ -120,11 +118,12 @@ B_fbl_int = [B_fbl; -D_fbl];
 C_fbl_int = [C_fbl, 0];
 D_fbl_int = D_fbl;
 
-controller_on = 1;
-Fw = 0;
+on;
+
+Fw = 0.2;
 omega_w = 1.3;
-%[K_fbl_lqr, ~, Poles_fbl_lqr] = lqr(A_fbl_int,B_fbl_int, diag([1 1000 0.005]),60);
-[K_fbl_lqr, ~, Poles_fbl_lqr] = lqr(A_fbl_int,B_fbl_int, diag([1 1000 0.08]),60);
+
+[K_fbl_lqr, ~, Poles_fbl_lqr] = lqr(A_fbl_int,B_fbl_int, diag([1 5000 0.5]),20);
 
 
 sim('IO_FBL_LQR.slx');
@@ -137,17 +136,27 @@ d = D/A;
 e = E/A;
 f = F/A;
 
-%p1 = 1;
-%p2 = 0.1;
-%k = 5;
 
-p2 = 2;
-p1 = 1;
-k = 8;
+% p2 = 2;
+% p1 = 1;
+% k = 8;
+% 
+% regularizer = 0.1;
 
-regularizer = 0.1;
+p2 = 6;
+p1 = 5;
+k = 1.2;
+ts = 4.6*p2/p1
+tsSigma = (p1*x0(1) + p2*x0(2))/k
 
-Fw = 0.2;
-omega_w = 1.3;
+%regularizer = 0.1;
 
-sim('SMC.slx')
+regularizer = 0.2;
+
+sat = 45;
+rate = 90;
+
+Fw = 0;
+omega_w = 0.3;
+
+sim('SMC.slx');
