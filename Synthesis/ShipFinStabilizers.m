@@ -10,7 +10,7 @@ Kp = -0.5e6; % Linear damping coefficient
 Knl = -0.416e6; % Nonlinear damping coefficient
 Kup = -15.5; % Added Linear damping coefficient
 KphiUU = -1180; % Added restoring moment coefficAient
-Af = 1.7; % Fin area
+Af = 2*1.7; % Fin area
 Cl = 0.046; % Linear lift coefficient [N/deg]
 rho = 1025; % Water density [kg/m^2]    
 g = 9.81; % Gravity acceleration [m/s^2]
@@ -31,8 +31,7 @@ F = -2*Kalpha;
 Fw = 0e-2;
 omega_w = 0.3;
 
-sat = 45;
-rate = 90;
+sat = 20;
 
 % matcont: 
 
@@ -43,7 +42,7 @@ rate = 90;
 % f = -0.0044
 
 x0 = [deg2rad(10);0];
-tf = 60;
+tf = 50;
 on;
 %% LQR
 % (0 0) linearization
@@ -62,42 +61,41 @@ D_int = D_lin;
 
 lin_sim = 0;
 Fw = 0;
-omega_w = 0.3;
-on;
-%[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 250000 50]),1.01);
-[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 250000 50]),1);
+omega_w = 1.3;
+
+
+%[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 250000 50]),1);
+
+[K_LQR_int, ~, Poles_LQR_int] = lqr(A_int,B_int, diag([1 1 100]),40);
+
 
 
 sim('LQR_ship.slx');
 
 %% Adaptive control
-
-ts = 5;
-
+ts = 8;
+tf = 100;
 Am = [0 1; -16/ts^2, -8/ts];
 Bm = [0; 16/ts^2];
+%Am = [0,1;-1.412, -1.0259];
+%Bm = [0;1];
 
-Am = [0,1;-1.412, -1.0259];
-Bm = [0;1];
 
-%ok omega_w = 1.3
-%alpha = 2000;
-%beta = 1000;
-%gamma = 200;
+%old fin, perfetti
+%alpha = 200; beta = 100; gamma = 1500;
+alpha   = 100000;
+beta    = alpha/100;
+gamma = 0;
 
-alpha = 200;
-beta = 100;
-gamma = 1500;
-
-gain_locking_start = 100;
+gain_locking_start = 1000;
 Fw = 0;
-omega_w = 1.3;
-
+omega_w = 0.3;
+sat = 20;
+x0 = [0;0];
 P = lyap(Am,eye(2));
-
 Ce = [0 1]*P;
 
-x = 0.4; P = lyap(Am,[1-x,0; 0 x]*eye(2)); Ce = [0,1]*P;
+%x = 0.5; P = lyap(Am,[1-x,0; 0 x]*eye(2)); Ce = [0,1]*P;
 sim('Synthesis/adaptive_control_new.slx')
 
 %% IO FBL
@@ -118,12 +116,13 @@ B_fbl_int = [B_fbl; -D_fbl];
 C_fbl_int = [C_fbl, 0];
 D_fbl_int = D_fbl;
 
-on;
-
-Fw = 0.2;
+Fw = 0.1;
 omega_w = 1.3;
 
-[K_fbl_lqr, ~, Poles_fbl_lqr] = lqr(A_fbl_int,B_fbl_int, diag([1 5000 0.5]),20);
+%funziona ok
+%[K_fbl_lqr, ~, Poles_fbl_lqr] = lqr(A_fbl_int,B_fbl_int, diag([1 5000 0.5]),20);
+
+[K_fbl_lqr, ~, Poles_fbl_lqr] = lqr(A_fbl_int,B_fbl_int, diag([1 1 0.1]),50);
 
 
 sim('IO_FBL_LQR.slx');
@@ -143,7 +142,7 @@ f = F/A;
 % 
 % regularizer = 0.1;
 
-p2 = 6;
+p2 = 2;
 p1 = 5;
 k = 1.2;
 ts = 4.6*p2/p1
@@ -153,10 +152,7 @@ tsSigma = (p1*x0(1) + p2*x0(2))/k
 
 regularizer = 0.2;
 
-sat = 45;
-rate = 90;
-
 Fw = 0;
-omega_w = 0.3;
+omega_w = 1.3;
 
 sim('SMC.slx');
