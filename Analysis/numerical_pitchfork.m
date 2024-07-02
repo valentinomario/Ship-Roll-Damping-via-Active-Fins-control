@@ -83,7 +83,6 @@ end
 
 xlabel('d');
 ylabel('x1');
-title('Solutions and Stability for varying d');
 hold off;
 
 % Plot results for e
@@ -101,5 +100,4 @@ end
 
 xlabel('e');
 ylabel('x1');
-title('Solutions and Stability for varying e');
 hold off;

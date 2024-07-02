@@ -5,6 +5,7 @@ function [figU, figX, figY] = plotTesina(out)
     plot(out.u.time, out.u.signals.values);
     title('Control Input')
     xlabel('t [s]'), ylabel('u [deg]')
+    ylim([-25, 25]);
     hold on;
     grid
 
@@ -21,6 +22,7 @@ function [figU, figX, figY] = plotTesina(out)
     plot(out.y.time, out.y.signals.values);
     title('Output')
     xlabel('t [s]'), ylabel('Roll angle [deg]')
+    ylim([-15, 15]);
     hold on;
     grid
 
