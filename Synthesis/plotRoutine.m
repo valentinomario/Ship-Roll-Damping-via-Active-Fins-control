@@ -80,6 +80,9 @@ figure(figY);
 plot(out.y.time,out.y.signals.values,'-.')
 legend('Linearized system','Nonlinear system')
 
+set(figU,'Position',[100 100 400 400])
+set(figY,'Position',[100 100 400 400])
+
 saveFigures(figU, 'no_waves_u', '.\img\LQR');
 saveFigures(figY, 'no_waves_y', '.\img\LQR');
 
@@ -155,7 +158,8 @@ out = sim(simulation);
 set(figU,'Name','FBL','NumberTitle','off')
 set(figX,'Name','FBL','NumberTitle','off')
 set(figY,'Name','FBL','NumberTitle','off')
-
+set(figU,'Position',[100 100 400 400])
+set(figY,'Position',[100 100 400 400])
 saveFigures(figU, 'no_waves_u', '.\img\FBL');
 saveFigures(figY, 'no_waves_y', '.\img\FBL');
 
@@ -223,7 +227,8 @@ out = sim(simulation);
 set(figU,'Name','SMC','NumberTitle','off')
 set(figX,'Name','SMC','NumberTitle','off')
 set(figY,'Name','SMC','NumberTitle','off')
-
+set(figU,'Position',[100 100 400 400])
+set(figY,'Position',[100 100 400 400])
 saveFigures(figU, 'no_waves_u', '.\img\SMC');
 saveFigures(figY, 'no_waves_y', '.\img\SMC');
 

@@ -107,6 +107,8 @@ function [backward_steady_state, forward_steady_state] = ...
         if plot_figure > 0
             figure(poincare_plt)
             scatter(steps,crossing_scatter,'MarkerEdgeColor',backward_marker_color);
+            xlabel('k');
+            ylabel('x_1')
         end
         % forward intersection plot
         steps =  1:length(forward_crossing_points);
