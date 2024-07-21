@@ -1,5 +1,5 @@
 function [figU, figX, figY] = plotTesina(out)
-
+% plots the results of the simulations in a nice standard way
 
     figU = figure;
     plot(out.u.time, out.u.signals.values);

@@ -1,4 +1,4 @@
-% automatic plot script
+% scritp that automatically generates the plots needed for the report
 
 clear
 close all

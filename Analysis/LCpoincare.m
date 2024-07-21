@@ -1,11 +1,11 @@
+% This script draws the poincaré diagram and saves it to a eps + jpg file
+
 close all
 clear
 
-%c = -0.05:0.01:0.35;
-%equilibria = [0, 0; -5.8351 , 0; -11.5376, 0; 5.8351 , 0; 11.5376, 0]';
+c = -0.05:0.01:0.35;
+equilibria = [0, 0; -5.8351 , 0; -11.5376, 0; 5.8351 , 0; 11.5376, 0]';
 
-c = 0.1;
-equilibria = [0;0];
 plot = 2;   % 0: don't draw intermediate plot
             % 1: plot trajectories and poincaré maps
             % 2: save everything to file

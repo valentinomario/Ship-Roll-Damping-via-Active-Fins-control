@@ -1,3 +1,6 @@
+% This script was used to plot the bifurcation diagrams of the parameters d and e, 
+% to highlight the pitchfork bifurcation
+
 b = -0.1232;
 c = -0.1015;
 d_val = -0.0648;

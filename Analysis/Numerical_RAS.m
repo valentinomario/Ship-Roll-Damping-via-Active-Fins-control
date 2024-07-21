@@ -1,3 +1,6 @@
+% This script numerically plots the RAS by finding the stable and unstable
+% trajectories
+
 clear
 close all
 tf = 200;
@@ -49,6 +52,7 @@ for i=1:length(diverging_points)
     drawnow;
 end
 
+% plot legend
 qw{1} = plot(NaN,'Color',[0.5 0.5 0.5]); % Converging trajectories
 qw{2} = plot(NaN,'Color',[0.8 0 0]); % Escaping trajectories
 
