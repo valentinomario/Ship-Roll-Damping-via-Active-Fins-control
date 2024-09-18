@@ -16,7 +16,7 @@ The roll motion of a ship in rough seas can pose safety risks, such as cargo shi
 
 <div align="center">
   <img src="./media/6DOF.png" alt="Degrees of Freedom of a Vessel" width="30%">
-  <p><em>Definition of the six degrees of freedom of a vessel.</em></p>
+  <p><em>Six degrees of freedom of a vessel</em></p>
 </div>
 
 ## Mathematical Model
